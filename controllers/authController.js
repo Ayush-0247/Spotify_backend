@@ -61,3 +61,35 @@ export const login = async (req,res) =>{
         res.status(500).json({ message: error.message });
     }
 }
+
+
+    export const logout = async (req, res) => {
+  res.cookie("token", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
+};
+
+
+// export const loggedInUser = async (req, res) => {
+//   try {
+//     // req.user comes from protect middleware
+//     const user = req.user;
+// console.log(req.headers.authorization);
+//     if (!user) {
+//       return res.status(401).json({ message: "Not authorized" });
+//     }
+
+//     res.status(200).json({
+//       _id: user._id,
+//       username: user.username,
+//       email: user.email,
+//       role: user.role,
+//     });
+
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
