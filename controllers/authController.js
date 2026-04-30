@@ -93,3 +93,22 @@ export const login = async (req,res) =>{
 //     res.status(500).json({ message: error.message });
 //   }
 // };
+
+export const getme = async(req,res)=>{
+const token = req.headers.authorization?.split(" ")[1];
+if(!token){
+    return res.status(401).json({message : "Not authorized"});
+}
+const user = jwt.verify(token , process.env.JWT_SECRET);
+// res.status(200).json({
+//     _id : user.id , username : user.username , email : user.email , role : user.role
+// })
+// console.log({
+//     _id : user._id , username : user.username , email : user.email , role : user.role
+// })
+const userinDB = await User.findById(user.id);
+res.status(200).json({
+    message:"Success" ,
+    _iddh : userinDB._id , username : userinDB.username , email : userinDB.email , role : userinDB.role
+})
+}
